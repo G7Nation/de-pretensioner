@@ -1,15 +1,15 @@
 {
 
     "manifest_version": 2,
-    "name": "Depretensioner",
+    "name": "depretensioner",
     "version": "1.0",
 
-    "description": "Replaces occurances of the word 'whilst' with 'while', and 'amongst' with 'among'.",
+    "description": "Replaces occurances of pretentious words with their normal-person version in webpages.",
 
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["de-pretensioner.js"]
+            "js": ["depretensioner.js"]
         }
     ],
 
