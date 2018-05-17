@@ -1,5 +1,5 @@
 # depretentioner
-Firefox browser extension that replaces occurances of pretentious words with their normal-person version when viewing webpages:
+Firefox browser extension that replaces occurances of pretentious words with their normal-person equivalent when viewing webpages:
 ```
 whilst  -> while  
 amongst -> among  
