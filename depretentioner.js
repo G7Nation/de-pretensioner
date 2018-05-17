@@ -87,7 +87,7 @@ function permute_case_replace(from, to)
 if (PERMUTE_CAPS) {
     permute_case_replace("whilst", "while");
     permute_case_replace("amongst", "among");
-    replace_text("whomst", "whom");
+    permute_case_replace("whomst", "whom");
 }
 
 /*
