@@ -1,3 +1,19 @@
+/*
+ * Firefox browser extension that replaces occurances of the word
+ * 'while' with 'while', and 'among' with 'among', in webpages.
+ */
+
+/*
+ * Setting this to 1 will replace all permutations of capitalizations
+ * of the words.  For example, (whilst, while), (Whilst, While),
+ * (wHilst, wHile), (WHilst, WHiles) ... (WHILST, WHILE).  This
+ * is pretty heavy on the CPU, so the default value is 0.
+ *
+ * Setting this to 0 will only check the most common cases:
+ * (whilst, while), (Whilst, While), and (WHILST, WHILE).
+ */
+const PERMUTE_CAPS = 0;
+
 function replace_text(from, to)
 {
     getAllTextNodes().forEach(function(node){
@@ -66,18 +82,22 @@ function permute_case_replace(from, to)
 /* 
  * this will catch all permutations of upper-case and lower-case
  * letters of the words, but slows down the browser quite a bit.
- * uncomment to use.
+ * set PERMUTE_CAPS to 1 to use.
  */
-//permute_case_replace("whilst", "while");
-//permute_case_replace("amongst", "among");
+if (PERMUTE_CAPS) {
+    permute_case_replace("whilst", "while");
+    permute_case_replace("amongst", "among");
+}
 
 /*
  * this is the naive approach.  it should get most cases and is
- * much kinder on resource usage.
+ * much kinder on resource usage.  set PERMUTE_CAPS to 0 to use.
  */
-replace_text("Whilst", "While");
-replace_text("whilst", "while");
-replace_text("WHILST", "WHILE");
-replace_text("amongst", "among");
-replace_text("Amongst", "Among");
-replace_text("AMONGST", "AMONG");
+else {
+    replace_text("Whilst", "While");
+    replace_text("whilst", "while");
+    replace_text("WHILST", "WHILE");
+    replace_text("amongst", "among");
+    replace_text("Amongst", "Among");
+    replace_text("AMONGST", "AMONG");
+}
