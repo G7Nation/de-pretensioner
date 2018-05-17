@@ -4,7 +4,7 @@
     "name": "depretensioner",
     "version": "1.0",
 
-    "description": "Replaces occurances of pretentious words with their normal-person version in webpages.",
+    "description": "Replaces occurances of pretentious words with their normal-person equivalent in webpages.",
 
     "content_scripts": [
         {
