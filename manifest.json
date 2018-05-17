@@ -1,0 +1,16 @@
+{
+
+  "manifest_version": 2,
+  "name": "De-pretensioner",
+  "version": "1.0",
+
+  "description": "Replaces occurances of the word 'whilst' with 'while', and 'amongst' with 'among'.",
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["de-pretensioner.js"]
+    }
+  ]
+
+}
