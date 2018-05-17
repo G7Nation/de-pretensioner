@@ -11,12 +11,6 @@
             "matches": ["<all_urls>"],
             "js": ["depretensioner.js"]
         }
-    ],
-
-    "applications": {
-        "gecko": {
-            "id": "depretensioner"
-        }
-    }
+    ]
 
 }
