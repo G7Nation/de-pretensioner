@@ -7,12 +7,12 @@
  * Setting this to 1 will replace all permutations of capitalizations
  * of the words.  For example, (whilst, while), (Whilst, While),
  * (wHilst, wHile), (WHilst, WHiles) ... (WHILST, WHILE).  This
- * can be is pretty heavy on the CPU.
+ * can be is pretty heavy on the CPU, so default is 0.
  *
  * Setting this to 0 will only check the most common cases:
  * (whilst, while), (Whilst, While), and (WHILST, WHILE).
  */
-const PERMUTE_CAPS = 1;
+const PERMUTE_CAPS = 0;
 
 function replace_text(from, to)
 {
