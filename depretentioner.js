@@ -7,31 +7,40 @@
  * Setting this to 1 will replace all permutations of capitalizations
  * of the words.  For example, (whilst, while), (Whilst, While),
  * (wHilst, wHile), (WHilst, WHiles) ... (WHILST, WHILE).  This
- * is pretty heavy on the CPU, so the default value is 0.
+ * can be is pretty heavy on the CPU.
  *
  * Setting this to 0 will only check the most common cases:
  * (whilst, while), (Whilst, While), and (WHILST, WHILE).
  */
-const PERMUTE_CAPS = 0;
+const PERMUTE_CAPS = 1;
 
 function replace_text(from, to)
 {
-    getAllTextNodes().forEach(function(node){
+    get_text_nodes().forEach(function(node){
         node.nodeValue = node.nodeValue.replace(new RegExp(quote(from), 'g'), to);
     });
 
-    function getAllTextNodes() {
-        var result = [];
+    /*
+     * Retrieve all text nodes which are not
+     * made of space characters.
+     * @return {Array} A collection of text nodes
+     */
+    function get_text_nodes () {
+        var walker = document.createTreeWalker(
+            document.documentElement,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+        ),
+        node = walker.nextNode(),
+        text_nodes = [];
 
-        (function scanSubTree(node){
-            if(node.childNodes.length) 
-                for(var i = 0; i < node.childNodes.length; i++) 
-                    scanSubTree(node.childNodes[i]);
-            else if(node.nodeType == Node.TEXT_NODE) 
-                result.push(node);
-        }) (document);
+        while(node) {
+            text_nodes.push(node);
+            node = walker.nextNode();
+        }
 
-        return result;
+        return text_nodes;
     }
 
     function quote(str) {
@@ -43,6 +52,8 @@ function permute_case_replace(from, to)
 {
     var i, j;
     var perm = 0, length = 0;
+    var ftmp = from.split("");
+    var ttmp = to.split("");
 
     if (from.length > to.length) {
         perm = 1 << to.length;
@@ -52,8 +63,6 @@ function permute_case_replace(from, to)
         length = from.length;
     }
 
-    var ftmp = from.split("");
-    var ttmp = to.split("");
     for (i=0; i<perm; i++) {
         for (j=0; j<length; j++) {
             // make sure we're not past the end
@@ -65,6 +74,43 @@ function permute_case_replace(from, to)
                 }
             }
 
+            // make sure we're not past the end
+            if (j < length) {
+                if (i & 1 << j) {
+                    ttmp[j] = ttmp[j].toUpperCase();
+                } else {
+                    ttmp[j] = ttmp[j].toLowerCase();
+                }
+            }
+        }
+        replace_text(ftmp.join(""), ttmp.join(""));
+    }
+}
+function permute_case_replace(from, to)
+{
+    var i, j;
+    var perm = 0, length = 0;
+    var ftmp = from.split("");
+    var ttmp = to.split("");
+
+    if (from.length > to.length) {
+        perm = 1 << to.length;
+        length = to.length;
+    } else {
+        perm = 1 << from.length;
+        length = from.length;
+    }
+
+    for (i=0; i<perm; i++) {
+        for (j=0; j<length; j++) {
+            // make sure we're not past the end
+            if (j < length) {
+                if (i & 1 << j) {
+                    ftmp[j] = ftmp[j].toUpperCase();
+                } else {
+                    ftmp[j] = ftmp[j].toLowerCase();
+                }
+            }
 
             // make sure we're not past the end
             if (j < length) {
